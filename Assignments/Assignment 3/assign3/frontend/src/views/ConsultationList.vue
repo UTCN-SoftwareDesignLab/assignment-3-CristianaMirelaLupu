@@ -1,0 +1,76 @@
+<template>
+  <v-card>
+    <v-card-title>
+      Consultations
+      <v-spacer></v-spacer>
+
+      <v-btn @click="addConsultation">Add C</v-btn>
+      <v-btn @click="goToPatients">Go to Patients</v-btn>
+
+    </v-card-title>
+    <v-data-table
+      :headers="headers"
+      :items="consultations"
+      :search="search"
+      @click:row="editConsultation"
+    ></v-data-table>
+    <ConsultationDialog
+      :opened="dialogVisible"
+      :consultation="selectedConsultation"
+      @refresh="refreshList"
+    ></ConsultationDialog>
+  </v-card>
+</template>
+
+<script>
+import api from "../api";
+import ConsultationDialog from "../components/ConsultationDialog";
+import router from "@/router";
+
+export default {
+  name: "ConsultationsList",
+  components: { ConsultationDialog },
+  data() {
+    return {
+      consultations: [],
+      search: "",
+      headers: [
+        {
+          text: "Name",
+          align: "start",
+          sortable: false,
+          value: "name",
+        },
+        { text: "Doctor", value: "doctor_id" },
+        { text: "Patient", value: "patient_id" },
+      ],
+      dialogVisible: false,
+      selectedConsultation: {},
+    };
+  },
+  methods: {
+    editConsultation(consultation) {
+      this.selectedConsultation = consultation;
+      this.dialogVisible = true;
+    },
+    addConsultation() {
+      this.dialogVisible = true;
+    },
+
+    goToPatients() {
+      router.push("/patients");
+    },
+
+    async refreshList() {
+      this.dialogVisible = false;
+      this.selectedConsultation = {};
+      this.consultation = await api.consultations.allConsultations();
+    },
+  },
+  created() {
+    this.refreshList();
+  },
+};
+</script>
+
+<style scoped></style>
