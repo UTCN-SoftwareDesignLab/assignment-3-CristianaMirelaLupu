@@ -22,7 +22,8 @@ public class UserController {
     }
 
     @PostMapping
-    public UserListDTO create(@RequestBody UserListDTO user){return userService.create(user);}
+    public UserListDTO create(@RequestBody UserListDTO user){
+        return userService.create(user);}
 
     @PatchMapping
     public UserListDTO edit (@RequestBody UserListDTO user){return userService.edit(user);}

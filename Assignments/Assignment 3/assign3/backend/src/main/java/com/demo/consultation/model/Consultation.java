@@ -22,14 +22,21 @@ public class Consultation {
     private Long id;
 
     @Column(length = 512, nullable = false)
-    private String name;
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "doctor_id")
     private User doctor;
 
+    @Column(nullable = false)
+    private Date consultationStartDate;
+
+    @Column(nullable = false)
+    private Date consultationEndDate;
 }
+
+

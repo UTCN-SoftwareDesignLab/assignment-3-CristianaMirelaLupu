@@ -36,5 +36,4 @@ public class ConsultationController {
         @DeleteMapping(UrlMapping.ID)
         public void deleteById(@PathVariable String id) {
             consultationService.deleteById(Long.parseLong(id));}
-
 }

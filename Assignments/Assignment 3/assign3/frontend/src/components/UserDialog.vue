@@ -15,15 +15,13 @@
           <v-text-field v-model="user.username" label="Username" />
           <v-text-field v-model="user.email" label="Email" />
           <v-text-field type="password" v-model="user.password" label="Password" />
-          <v-text-field type="role" v-model="user.role" label="Role" />
+          <v-text-field type="roles" v-model="user.roles" label="Role" />
 
-          <input type="radio" id="DOCTOR" value="DOCTOR" v-model="picked">
-          <label for="DOCTOR">DOCTOR</label>
-          <br>
-          <input type="radio" id="SECRETARY" value="SECRETARY" v-model="picked">
-          <label for="SECRETARY">SECRETARY</label>
-          <br>
-          <span>Picked: {{ picked }}</span>
+          <v-radio-group v-model="user.roles">
+            <v-radio label="Admin" value="ADMIN" />
+            <v-radio label="Secretary" value="SECRETARY" />
+            <v-radio label="Doctor" value="DOCTOR" />
+          </v-radio-group>
         </v-form>
 
         <v-card-actions>
@@ -46,7 +44,7 @@ export default {
   props: {
     user: Object,
     opened: Boolean,
-    picked: Object,
+    picked: null,
   },
   methods: {
     persist() {
@@ -58,7 +56,7 @@ export default {
               username: this.user.username,
               email: this.user.email,
               password: this.user.password,
-              roles: this.user.role
+              roles: [this.user.roles],
             })
             .then(() => this.$emit("refresh"));
 
@@ -70,6 +68,7 @@ export default {
               username: this.user.username,
               email: this.user.email,
               password: this.user.password,
+              roles: [this.user.roles],
             })
       }
     },

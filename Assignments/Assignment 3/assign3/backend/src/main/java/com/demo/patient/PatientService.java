@@ -39,10 +39,11 @@ public class PatientService {
         Patient actPatient = findById(patient.getId());
 
         actPatient.setName(patient.getName());
-        actPatient.setIdNo(patient.getIdNo());
+        actPatient.setCard(patient.getCard());
         actPatient.setSSN(patient.getSSN());
         actPatient.setBirthDate(patient.getBirthDate());
         actPatient.setAddress(patient.getAddress());
+        actPatient.setConsultations(patient.getConsultations());
 
         return patientMapper.toDto(
                 patientRepository.save(actPatient)

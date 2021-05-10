@@ -1,5 +1,6 @@
 package com.demo.user.dto;
 
+import com.demo.user.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

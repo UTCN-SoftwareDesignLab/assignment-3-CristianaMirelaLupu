@@ -1,10 +1,10 @@
 <template>
   <v-card>
     <v-card-title>
-      Consultations
+      Patients
       <v-spacer></v-spacer>
 
-      <v-btn @click="addPatient">Add C</v-btn>
+      <v-btn @click="addPatient">Add Patient</v-btn>
       <v-btn @click="goToConsultations">Go to Consultations</v-btn>
 
     </v-card-title>
@@ -41,9 +41,9 @@ export default {
           sortable: false,
           value: "name",
         },
-        { text: "Id No", value: "id_no" },
-        { text: "Ssn", value: "ssn" },
-        { text: "Birthdate", value: "birth_date" },
+        { text: "Card", value: "card" },
+        { text: "SSN", value: "ssn" },
+        { text: "Birthdate", value: "birthDate" },
         { text: "Address", value: "address" },
       ],
       dialogVisible: false,

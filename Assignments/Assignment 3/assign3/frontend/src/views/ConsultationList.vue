@@ -4,7 +4,7 @@
       Consultations
       <v-spacer></v-spacer>
 
-      <v-btn @click="addConsultation">Add C</v-btn>
+      <v-btn @click="addConsultation">Add Consultation</v-btn>
       <v-btn @click="goToPatients">Go to Patients</v-btn>
 
     </v-card-title>
@@ -36,10 +36,10 @@ export default {
       search: "",
       headers: [
         {
-          text: "Name",
+          text: "Description",
           align: "start",
           sortable: false,
-          value: "name",
+          value: "description",
         },
         { text: "Doctor", value: "doctor_id" },
         { text: "Patient", value: "patient_id" },

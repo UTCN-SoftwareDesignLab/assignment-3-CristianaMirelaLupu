@@ -1,5 +1,3 @@
-////////into patient
-
 <template>
   <v-dialog
       transition="dialog-bottom-transition"
@@ -10,30 +8,21 @@
       <v-card>
 
         <v-toolbar color="primary" dark>
-          {{ isNew ? "Create user" : "Edit user" }}
+          {{ isNew ? "Create patient" : "Edit patient" }}
         </v-toolbar>
 
         <v-form >
-          <v-text-field v-model="user.username" label="Username" />
-          <v-text-field v-model="user.email" label="Email" />
-          <v-text-field type="password" v-model="user.password" label="Password" />
-          <v-text-field type="role" v-model="user.role" label="Role" />
+          <v-text-field v-model="patient.name" label="Name" />
+          <v-text-field v-model="patient.card" label="Credit number" />
+          <v-text-field v-model="patient.ssn" label="SSN" />
+          <v-text-field type="date" v-model="patient.birthDate" label="Birthdate" />
+          <v-text-field v-model="patient.address" label="Address" />
 
-          <input type="radio" id="DOCTOR" value="DOCTOR" v-model="picked">
-          <label for="DOCTOR">DOCTOR</label>
-          <br>
-          <input type="radio" id="SECRETARY" value="SECRETARY" v-model="picked">
-          <label for="SECRETARY">SECRETARY</label>
-          <br>
-          <span>Picked: {{ picked }}</span>
         </v-form>
-
         <v-card-actions>
           <v-btn @click="persist">
             {{ isNew ? "Create" : "Save" }}
           </v-btn>
-          <v-btn v-if="!isNew" @click="deletion">Delete</v-btn>
-
         </v-card-actions>
       </v-card>
     </template>
@@ -44,54 +33,45 @@
 import api from "../api";
 
 export default {
-  name: "UserDialog",
+  name: "PatientDialog",
   props: {
-    user: Object,
+    patient: Object,
     opened: Boolean,
-    picked: Object,
   },
   methods: {
     persist() {
       // console.log("On click");
       if (this.isNew) {
         //console.log("heiiiii");
-        api.users
+        api.patients
             .create({
-              username: this.user.username,
-              email: this.user.email,
-              password: this.user.password,
-              roles: this.user.role
+              name: this.patient.name,
+              card: this.patient.card,
+              ssn: this.patient.ssn,
+              birthDate: this.patient.birthDate,
+              address: this.patient.address
             })
             .then(() => this.$emit("refresh"));
 
       } else {
         //console.log("here");
-        api.users
+        api.patients
             .edit({
               id: this.user.id,
-              username: this.user.username,
-              email: this.user.email,
-              password: this.user.password,
+              name: this.patient.name,
+              card: this.patient.card,
+              ssn: this.patient.ssn,
+              birthDate: this.patient.birthDate,
+              address: this.patient.address
             })
       }
     },
-
-    deletion() {
-      //console.log("heiiiii");
-      //console.log(this.user)
-      api.users.deleteById(this.user.id)
-          .then((response) => {
-                if (response == true)
-                  this.$emit("refresh")
-              }
-          );
-    }
   },
 
   computed: {
     isNew: function () {
-      console.log(this.user)
-      return !this.user.id
+      console.log(this.patient)
+      return !this.patient.id
     },
   },
 };

@@ -12,5 +12,4 @@ import org.mapstruct.Mapper;
 
         ConsultationDTO toDto(Consultation consultation);
         Consultation toConsultation (ConsultationDTO consultation);
-
 }

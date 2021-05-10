@@ -1,10 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import UserList from "../views/UserList.vue";
-import BookList from "../views/ConsultationList.vue";
+import ConsultationList from "../views/ConsultationList.vue";
+import PatientList from "@/views/PatientsList";
 import { auth as store } from "../store/auth.module";
 import Login from "../views/Login";
-import BookStore from "@/views/BookStore";
 
 Vue.use(VueRouter);
 
@@ -22,31 +22,31 @@ const routes = [
       if (store.getters.isAdmin) {
         next();
       } else {
-        next({ name: "Book" });
+        next({ name: "User" });
       }
     },
   },
   {
-    path: "/books",
-    name: "Books",
-    component: BookList,
+    path: "/patients",
+    name: "Patients",
+    component: PatientList,
     beforeEnter: (to, from, next) => {
-      if (store.state.status.loggedIn) {
+      if (store.getters.isDoctor) {
         next();
       } else {
-        next({ name: "Home" });
+        next({ name: "Patient" });
       }
     },
   },
   {
-    path: "/bookstore",
-    name: "Bookstore",
-    component: BookStore,
+    path: "/consultations",
+    name: "Consultations",
+    component: ConsultationList,
     beforeEnter: (to, from, next) => {
-      if (store.state.status.loggedIn) {
+      if (store.getters.isSecretary) {
         next();
       } else {
-        next({ name: "Bookstore" });
+        next({ name: "Consultation" });
       }
    },
   },

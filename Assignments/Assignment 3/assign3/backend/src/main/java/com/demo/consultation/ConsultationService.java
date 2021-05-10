@@ -27,6 +27,7 @@ public class ConsultationService {
         return consultationRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Consultation not found: " + id));
     }
+
     public List<ConsultationDTO> findAll() {
         return consultationRepository.findAll().stream()
                 .map(consultationMapper::toDto)
@@ -42,9 +43,11 @@ public class ConsultationService {
 
         Consultation actConsultation = findById(consultation.getId());
 
-        actConsultation.setName(consultation.getName());
+        actConsultation.setDescription(consultation.getDescription());
         actConsultation.setPatient(consultation.getPatient());
         actConsultation.setDoctor(consultation.getDoctor());
+        actConsultation.setConsultationStartDate(consultation.getConsultationStartDate());
+        actConsultation.setConsultationEndDate(consultation.getConsultationStartDate());
 
         return consultationMapper.toDto(
                 consultationRepository.save(actConsultation)

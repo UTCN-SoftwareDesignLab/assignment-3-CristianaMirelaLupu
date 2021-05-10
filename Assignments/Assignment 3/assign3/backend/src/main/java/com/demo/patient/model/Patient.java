@@ -1,5 +1,6 @@
 package com.demo.patient.model;
 
+import com.demo.consultation.model.Consultation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -23,7 +26,7 @@ public class Patient {
     private String name;
 
     @Column(length = 512)
-    private String idNo;
+    private String card;
 
     @Column(length = 512)
     private String SSN;
@@ -33,4 +36,7 @@ public class Patient {
 
     @Column(length = 512)
     private String address;
+
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.REMOVE)
+    private List<Consultation> consultations;
 }

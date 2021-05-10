@@ -32,6 +32,7 @@ public class UserService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found: " + id));
     }
 
+
     public List<UserMinimalDTO> allUsersMinimal() {
         return userRepository.findAll()
                 .stream().map(userMapper::userMinimalFromUser)
@@ -51,33 +52,45 @@ public class UserService {
         Set<String> rolesStr = user.getRoles();
         Set<Role> roles = new HashSet<>();
 
-        if (rolesStr == null) {
-            Role defaultRole = roleRepository.findByName(ERole.SECRETARY)
-                    .orElseThrow(() -> new RuntimeException("Cannot find CUSTOMER role"));
+        if(rolesStr == null){
+            Role defaultRole = roleRepository.findByName(ERole.SECRETARY).orElseThrow(() -> new RuntimeException("Role not found!"));
             roles.add(defaultRole);
-        } else {
-            rolesStr.forEach(r -> {
-                Role ro = roleRepository.findByName(ERole.valueOf(r))
-                        .orElseThrow(() -> new RuntimeException("Cannot find role: " + r));
-                roles.add(ro);
-            });
         }
-        userToSave.setRoles(roles);//.stream().map(role -> role.getName().name()).collect(Collectors.toSet()));
+        else {
+            Set<String> r = user.getRoles();
+            Role role;
+            for(String s: r){
+                role = roleRepository.findByName(ERole.valueOf(s)).orElseThrow(()->new RuntimeException("Role not found!"));
+                roles.add(role);
+            }
+        }
+        userToSave.setRoles(roles);
         userRepository.save(userToSave);
 
         return user;
     }
 
-    public UserListDTO edit(UserListDTO user) {
+//    private Role rolesFromString(String role){
+//        return roleRepository.findByName(ERole.valueOf(role))
+//                .orElseThrow(()-> new EntityNotFoundException("Role not found!"));
+//    }
 
+    public UserListDTO edit(UserListDTO user){
         User actUser = findById(user.getId());
         actUser.setUsername(user.getUsername());
         actUser.setEmail(user.getEmail());
 
+        Set<String> roleStr = user.getRoles();
+        Set<Role> roles = new HashSet<>();
+        for(String s: roleStr){
+            roles.add(roleRepository.findByName(ERole.valueOf(s))
+                    .orElseThrow(()-> new EntityNotFoundException("Role not found!")));
+        }
+        actUser.setRoles(roles);
+
         return userMapper.userListDtoFromUser(
-                userRepository.save(actUser)
-        );
-    }
+                userRepository.save(actUser));
+        }
 
     public void deleteAll (){
         userRepository.deleteAll();

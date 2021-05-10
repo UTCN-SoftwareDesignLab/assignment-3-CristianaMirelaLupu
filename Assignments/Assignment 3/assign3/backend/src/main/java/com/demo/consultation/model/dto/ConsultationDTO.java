@@ -16,7 +16,9 @@ import java.sql.Date;
 
 public class ConsultationDTO {
     private Long id;
-    private String name;
+    private String description;
     private Patient patient;
     private User doctor;
+    private Date consultationStartDate;
+    private Date consultationEndDate;
 }
