@@ -11,9 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
@@ -43,6 +41,29 @@ public class UserService {
         return userRepository.findAll()
                 .stream().map(userMapper::userListDtoFromUser)
                 .collect(toList());
+    }
+
+    public List<UserListDTO> allDoctors(){
+        List<UserListDTO> allUsers = userRepository.findAll()
+                .stream().map(userMapper::userListDtoFromUser)
+                .collect(toList());
+        List<UserListDTO> doctors = new ArrayList<>();
+
+        for (UserListDTO u: allUsers){
+            Set<String> r = u.getRoles();
+            for(String s: r){
+                if (s.equals(roleRepository.findByName(ERole.DOCTOR))) {
+                    doctors.add(u);
+                }
+            }
+        }
+        return doctors;
+    }
+
+    public User findDoctorByName(String name){
+        User user = userRepository.findByUsername(name)
+                .orElseThrow(() -> new RuntimeException("Doctor not found"));
+        return user;
     }
 
     public UserListDTO create(UserListDTO user) {

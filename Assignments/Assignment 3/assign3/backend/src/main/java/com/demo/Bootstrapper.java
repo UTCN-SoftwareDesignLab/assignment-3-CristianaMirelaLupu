@@ -80,9 +80,17 @@ public class Bootstrapper implements ApplicationListener<ApplicationReadyEvent> 
                     .build());
 
             patientService.create(PatientDTO.builder()
-                    .name("Popescu Anton")
+                    .name("patient1")
                     .card("1234")
                     .SSN("123445678910")
+                    .birthDate(Date.valueOf(LocalDate.now()))
+                    .address("Cluj-Napoca")
+                    .build());
+
+            patientService.create(PatientDTO.builder()
+                    .name("patient2")
+                    .card("9874")
+                    .SSN("123445678911")
                     .birthDate(Date.valueOf(LocalDate.now()))
                     .address("Cluj-Napoca")
                     .build());

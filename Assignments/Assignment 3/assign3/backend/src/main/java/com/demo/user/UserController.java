@@ -21,6 +21,9 @@ public class UserController {
         return userService.allUsersForList();
     }
 
+    @GetMapping("/doctor")
+    public List<UserListDTO> allDoctors(){return userService.allDoctors();}
+
     @PostMapping
     public UserListDTO create(@RequestBody UserListDTO user){
         return userService.create(user);}

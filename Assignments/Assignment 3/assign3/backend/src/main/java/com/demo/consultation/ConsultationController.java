@@ -13,27 +13,27 @@ import java.util.List;
 
 public class ConsultationController {
 
-        private final ConsultationService consultationService;
+    private final ConsultationService consultationService;
 
-        @GetMapping
-        public List<ConsultationDTO> allConsultations() {
-            return consultationService.findAll();
-        }
+    @GetMapping
+    public List<ConsultationDTO> allConsultations() {
+        return consultationService.findAll();
+    }
 
-        @PostMapping
-        public ConsultationDTO create(@RequestBody ConsultationDTO consultation) {
-            return consultationService.create(consultation);
-        }
+    @PostMapping
+    public ConsultationDTO create(@RequestBody ConsultationDTO consultation) throws Exception {
+        return consultationService.create(consultation);
+    }
 
-        @PutMapping
-        public ConsultationDTO edit(@RequestBody ConsultationDTO consultation) {
-            return consultationService.edit(consultation);
-        }
+    @PutMapping
+    public ConsultationDTO edit(@RequestBody ConsultationDTO consultation) {
+        return consultationService.edit(consultation);
+    }
 
-        @DeleteMapping
-        public void deleteAll() { consultationService.deleteAll(); }
+    @DeleteMapping
+    public void deleteAll() { consultationService.deleteAll(); }
 
-        @DeleteMapping(UrlMapping.ID)
-        public void deleteById(@PathVariable String id) {
-            consultationService.deleteById(Long.parseLong(id));}
+    @DeleteMapping(UrlMapping.ID)
+    public void deleteById(@PathVariable String id) {
+        consultationService.deleteById(Long.parseLong(id));}
 }

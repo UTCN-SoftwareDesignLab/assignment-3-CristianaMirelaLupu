@@ -40,9 +40,7 @@ export default {
   },
   methods: {
     persist() {
-      // console.log("On click");
       if (this.isNew) {
-        //console.log("heiiiii");
         api.patients
             .create({
               name: this.patient.name,
@@ -54,7 +52,6 @@ export default {
             .then(() => this.$emit("refresh"));
 
       } else {
-        //console.log("here");
         api.patients
             .edit({
               id: this.user.id,

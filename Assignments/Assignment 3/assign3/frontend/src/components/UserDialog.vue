@@ -1,8 +1,8 @@
 <template>
   <v-dialog
-    transition="dialog-bottom-transition"
-    max-width="600"
-    :value="opened"
+      transition="dialog-bottom-transition"
+      max-width="600"
+      :value="opened"
   >
     <template>
       <v-card>
@@ -19,8 +19,8 @@
 
           <v-radio-group v-model="user.roles">
             <v-radio label="Admin" value="ADMIN" />
-            <v-radio label="Secretary" value="SECRETARY" />
             <v-radio label="Doctor" value="DOCTOR" />
+            <v-radio label="Secretary" value="SECRETARY" />
           </v-radio-group>
         </v-form>
 
@@ -48,9 +48,7 @@ export default {
   },
   methods: {
     persist() {
-     // console.log("On click");
       if (this.isNew) {
-        //console.log("heiiiii");
         api.users
             .create({
               username: this.user.username,
@@ -61,7 +59,6 @@ export default {
             .then(() => this.$emit("refresh"));
 
       } else {
-        //console.log("here");
         api.users
             .edit({
               id: this.user.id,
@@ -73,16 +70,14 @@ export default {
       }
     },
 
-  deletion() {
-      //console.log("heiiiii");
-      //console.log(this.user)
+    deletion() {
       api.users.deleteById(this.user.id)
           .then((response) => {
-            if (response == true)
-             this.$emit("refresh")
-          }
+                if (response == true)
+                  this.$emit("refresh")
+              }
           );
-  }
+    }
   },
 
   computed: {

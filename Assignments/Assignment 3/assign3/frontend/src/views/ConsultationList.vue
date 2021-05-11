@@ -9,15 +9,15 @@
 
     </v-card-title>
     <v-data-table
-      :headers="headers"
-      :items="consultations"
-      :search="search"
-      @click:row="editConsultation"
+        :headers="headers"
+        :items="consultations"
+        :search="search"
+        @click:row="editConsultation"
     ></v-data-table>
     <ConsultationDialog
-      :opened="dialogVisible"
-      :consultation="selectedConsultation"
-      @refresh="refreshList"
+        :opened="dialogVisible"
+        :consultation="selectedConsultation"
+        @refresh="refreshList"
     ></ConsultationDialog>
   </v-card>
 </template>
@@ -41,8 +41,10 @@ export default {
           sortable: false,
           value: "description",
         },
-        { text: "Doctor", value: "doctor_id" },
-        { text: "Patient", value: "patient_id" },
+        { text: "Doctor", value: "doctor" },
+        { text: "Patient", value: "patient" },
+        {text: "Date", value: "date"},
+        {text: "Time", value: "time"},
       ],
       dialogVisible: false,
       selectedConsultation: {},
